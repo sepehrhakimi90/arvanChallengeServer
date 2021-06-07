@@ -39,7 +39,7 @@ func (r *ruleController) CreateRule(c *gin.Context) {
 		return
 	}
 
-	if rule.StartTime.Before(time.Now()) {
+	if rule.StartTime.In(time.Local).Before(time.Now().Add(-20 * time.Second)) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "start time cannot be in the past"})
 		return
 	}
